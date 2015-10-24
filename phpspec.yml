@@ -1,0 +1,5 @@
+suites:
+    main:
+        namespace: BetterDex
+        psr4_prefix: BetterDex
+        src_path: app
