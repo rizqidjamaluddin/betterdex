@@ -24,7 +24,8 @@
         <div class="" id="pokemon-search">
             <div class="poke-grid">
                 <div class="pokedex-search">
-                    <input type="text" autofocus v-on:keyup="search" v-el="searchBox" v-model="searchFor">
+                    <input type="text" autofocus v-on:keyup="search" @keyup.enter="selectSearch" v-el:search-box
+                           v-model="searchFor">
                 </div>
                 <div class="no-result" v-if="!subject">Not found.</div>
                 <div class="pokedex-general" v-if="subject">

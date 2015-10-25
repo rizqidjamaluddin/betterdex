@@ -126,6 +126,9 @@ var dexSearch = new Vue({
             if (!this.subject) {
                 this.subject = oldSubject;
             }
+        },
+        selectSearch: function () {
+            this.$els.searchBox.select();
         }
     },
 
