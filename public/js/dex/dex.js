@@ -24,6 +24,10 @@ var baseTypes = [
     "fairy"
 ];
 
+var statMap = [
+    "hp", "attack", "defense", "special-attack", "special-defense", "speed"
+];
+
 var dexSearch = new Vue({
     el: "#pokemon-search",
     data: {
@@ -33,7 +37,8 @@ var dexSearch = new Vue({
             name: "",
             number: "",
             types: [],
-            defenses: {}
+            defenses: {},
+            stats: {}
         },
         pokedexList: []
     },
@@ -46,6 +51,49 @@ var dexSearch = new Vue({
                 }
             },
             template: '<span class="type type-{{ value }}" v-bind:class="[class]">{{ value }}</span>'
+        },
+        'stat-graph': {
+            data: function () {
+                return {
+                    graph: ""
+                };
+            },
+            props: ['values'],
+            template: '<canvas v-el:graph height="230" width="230"></canvas>',
+            events: {
+                'subject-change': function (subject) {
+                    this.updateChart();
+                }
+            },
+            methods: {
+                updateChart: function () {
+                    var current = this.values;
+                    for (var type in current) {
+                        this.graph.datasets[0].points[statMap.indexOf(type)].value = current[type];
+                    }
+                    this.graph.update();
+                }
+            },
+            ready: function () {
+                this.graph = new Chart(this.$els.graph.getContext('2d')).Radar({
+                    labels: ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'],
+                    datasets: [
+                        {
+                            fillColor: "rgba(220,220,220,0.2)",
+                            strokeColor: "rgba(220,220,220,1)",
+                            pointColor: "rgba(220,220,220,1)",
+                            pointStrokeColor: "#fff",
+                            pointHighlightFill: "#fff",
+                            pointHighlightStroke: "rgba(220,220,220,1)",
+                            pointDotRadius : 10,
+                            pointDotStrokeWidth : 5,
+                            data: [0,0,0,0,0,0],
+                            scaleShowLabels: true,
+                            pointLabelFontSize : 20
+                        }
+                    ]
+                }, {});
+            }
         },
         'type-graph': {
             data: function () {
@@ -74,9 +122,9 @@ var dexSearch = new Vue({
                     animationEasing: 'easeInOutSine',
                     animationSteps: 10,
                     showScale: false,
-                    segmentStrokeColor : "#3A4654",
-                    segmentStrokeWidth : 2,
-                    animateScale : true
+                    segmentStrokeColor: "#3A4654",
+                    segmentStrokeWidth: 2,
+                    animateScale: true
                 });
             }
         }
@@ -135,8 +183,8 @@ var dexSearch = new Vue({
     ready: function () {
         var $v = this;
         var $data = $.get('api/pokemon').success(function (payload) {
-            $v.$set('pokedexList',_.map(payload.data, function (value, key) {
-                return _.extend(_.pick(value, ['number', 'name', 'types', 'sprite']), {
+            $v.$set('pokedexList', _.map(payload.data, function (value, key) {
+                return _.extend(_.pick(value, ['number', 'name', 'types', 'sprite', 'stats']), {
                     defenses: value['type-defenses']
                 });
             }));
@@ -144,7 +192,7 @@ var dexSearch = new Vue({
         });
 
         this.$watch('subject', function () {
-           this.$broadcast('subject-change', this.subject);
+            this.$broadcast('subject-change', this.subject);
         });
     }
 });

@@ -3,6 +3,7 @@
 namespace BetterDex\Providers;
 
 use BetterDex\Dex\Combat\TypeEfficacyComparator;
+use BetterDex\Dex\Species\PokemonStatRepository;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -25,5 +26,6 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton(TypeEfficacyComparator::class);
+        $this->app->singleton(PokemonStatRepository::class);
     }
 }

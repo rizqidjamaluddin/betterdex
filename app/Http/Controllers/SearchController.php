@@ -3,6 +3,7 @@
 use BetterDex\Dex\Combat\TypeEfficacyComparator;
 use BetterDex\Dex\Species\Pokemon;
 use BetterDex\Dex\Species\PokemonRepository;
+use BetterDex\Dex\Species\PokemonStatRepository;
 use BetterDex\Dex\Species\PokemonTransformer;
 use Input;
 
@@ -21,13 +22,18 @@ class SearchController extends Controller
      * @var TypeEfficacyComparator
      */
     private $typeEfficacyComparator;
+    /**
+     * @var PokemonStatRepository
+     */
+    private $statRepository;
 
     public function __construct(PokemonRepository $pokemonRepository, PokemonTransformer $pokemonTransformer,
-                                TypeEfficacyComparator $typeEfficacyComparator)
+                                TypeEfficacyComparator $typeEfficacyComparator, PokemonStatRepository $statRepository)
     {
         $this->pokemonRepository = $pokemonRepository;
         $this->pokemonTransformer = $pokemonTransformer;
         $this->typeEfficacyComparator = $typeEfficacyComparator;
+        $this->statRepository = $statRepository;
     }
 
     public function index()
@@ -50,7 +56,7 @@ class SearchController extends Controller
         } else {
             // instruct calculators to eager load
             $this->typeEfficacyComparator->preloadAllData();
-
+            $this->statRepository->preloadStats();
 
             $result = $this->pokemonRepository->getAll()->map(function (Pokemon $pokemon) {
                return  $this->pokemonTransformer->transform($pokemon);

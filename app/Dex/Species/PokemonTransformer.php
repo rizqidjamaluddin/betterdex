@@ -10,10 +10,15 @@ class PokemonTransformer
      * @var TypeEfficacyComparator
      */
     private $efficacyComparator;
+    /**
+     * @var PokemonStatRepository
+     */
+    private $statRepository;
 
-    public function __construct(TypeEfficacyComparator $efficacyComparator)
+    public function __construct(TypeEfficacyComparator $efficacyComparator, PokemonStatRepository $statRepository)
     {
         $this->efficacyComparator = $efficacyComparator;
+        $this->statRepository = $statRepository;
     }
 
     public function transform(Pokemon $pokemon)
@@ -27,6 +32,7 @@ class PokemonTransformer
             }),
             'sprite' => $number,
             'type-defenses' => $this->efficacyComparator->getDefences($pokemon->types),
+            'stats' => $this->statRepository->getStatsFor($pokemon),
         ];
     }
 }

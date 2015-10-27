@@ -88,6 +88,9 @@
                         <div class="clear"> </div>
 
                     </section>
+                    <section class="pokemon-stats">
+                        <stat-graph v-ref:stats v-bind:values="subject.stats"></stat-graph>
+                    </section>
                 </div>
             </div>
             {{--end poke-grid--}}
