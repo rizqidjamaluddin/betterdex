@@ -76,7 +76,7 @@ var dexSearch = new Vue({
             },
             ready: function () {
                 this.graph = new Chart(this.$els.graph.getContext('2d')).Radar({
-                    labels: ['HP', 'Attack', 'Defense', 'Special Attack', 'Special Defense', 'Speed'],
+                    labels: ['HP', 'ATK', 'DEF', 'SP ATK', 'SP DEF', 'SPD'],
                     datasets: [
                         {
                             fillColor: "rgba(220,220,220,0.2)",
@@ -85,14 +85,20 @@ var dexSearch = new Vue({
                             pointStrokeColor: "#fff",
                             pointHighlightFill: "#fff",
                             pointHighlightStroke: "rgba(220,220,220,1)",
-                            pointDotRadius : 10,
-                            pointDotStrokeWidth : 5,
-                            data: [0,0,0,0,0,0],
-                            scaleShowLabels: true,
-                            pointLabelFontSize : 20
+                            data: [0,0,0,0,0,0]
                         }
                     ]
-                }, {});
+                }, {
+                    scaleShowLabels: true,
+                    pointLabelFontSize : 13,
+                    pointLabelFontColor : "rgba(255,255,255,.2)",
+                    scaleFontColor: "rgba(255,255,255,.5)",
+                    showScale: true,
+                    scaleLineWidth: 5,
+                    pointDotRadius : 3,
+                    pointDotStrokeWidth : 0,
+                    pointLabelFontFamily : "sans-serif"
+                });
             }
         },
         'type-graph': {

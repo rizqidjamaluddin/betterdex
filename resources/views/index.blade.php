@@ -89,7 +89,18 @@
 
                     </section>
                     <section class="pokemon-stats">
-                        <stat-graph v-ref:stats v-bind:values="subject.stats"></stat-graph>
+                        <div class="pokemon-stat-graph">
+                            <stat-graph v-ref:stats v-bind:values="subject.stats"></stat-graph>
+                        </div>
+                        <div class="pokemon-stat-details">
+                            <p><strong>HP</strong> @{{subject.stats.hp}}</p>
+                            <p><strong>ATK</strong> @{{subject.stats.attack}}</p>
+                            <p><strong>DEF</strong> @{{subject.stats.defense}}</p>
+                            <p><strong>SP ATK</strong> <i></i> @{{subject.stats["special-attack"]}}</p>
+                            <p><strong>SP DEF</strong> @{{subject.stats["special-defense"]}}</p>
+                            <p><strong>SPD</strong> @{{subject.stats.speed}}</p>
+                        </div>
+                        <div class="clear"> </div>
                     </section>
                 </div>
             </div>

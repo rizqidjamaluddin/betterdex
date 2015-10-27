@@ -124,6 +124,28 @@ button:focus {
     padding-right: 5px;
 }
 
+.pokemon-stat-graph {
+    width: 270px;
+    float: left;
+}
+
+.pokemon-stat-graph canvas{
+    margin: 20px;
+}
+
+.pokemon-stat-details {
+    width: 530px;
+    float: left;
+    padding-top: 20px;
+}
+.pokemon-stat-details strong {
+    width: 60px;
+    display: inline-block;
+    text-align: right;
+    padding-right: 5px;
+    color: rgba(255,255,255,.7);
+}
+
 .clear {
     clear: both;
 }
